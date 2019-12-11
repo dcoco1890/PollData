@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -174,7 +174,12 @@ var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 const Index = () => __jsx(_comps_Layout__WEBPACK_IMPORTED_MODULE_1__["default"], null, __jsx(_comps_Section__WEBPACK_IMPORTED_MODULE_2__["default"], {
   col: "7",
   uno: true
-}, " "), __jsx(_comps_Section__WEBPACK_IMPORTED_MODULE_2__["default"], {
+}, __jsx("span", {
+  className: "d-block w-100 h5 text-uppercase text-primary font-weight-bold mb-4",
+  style: {
+    marginTop: -50
+  }
+}, "Poll for the Day")), __jsx(_comps_Section__WEBPACK_IMPORTED_MODULE_2__["default"], {
   col: "5"
 }, __jsx("h1", null, "HUI")));
 
@@ -182,7 +187,7 @@ const Index = () => __jsx(_comps_Layout__WEBPACK_IMPORTED_MODULE_1__["default"],
 
 /***/ }),
 
-/***/ 3:
+/***/ 4:
 /*!******************************!*\
   !*** multi ./pages/index.js ***!
   \******************************/

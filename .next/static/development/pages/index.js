@@ -3626,7 +3626,12 @@ var Index = function Index() {
   return __jsx(_comps_Layout__WEBPACK_IMPORTED_MODULE_1__["default"], null, __jsx(_comps_Section__WEBPACK_IMPORTED_MODULE_2__["default"], {
     col: "7",
     uno: true
-  }, " "), __jsx(_comps_Section__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }, __jsx("span", {
+    className: "d-block w-100 h5 text-uppercase text-primary font-weight-bold mb-4",
+    style: {
+      marginTop: -50
+    }
+  }, "Poll for the Day")), __jsx(_comps_Section__WEBPACK_IMPORTED_MODULE_2__["default"], {
     col: "5"
   }, __jsx("h1", null, "HUI")));
 };
@@ -3635,7 +3640,7 @@ var Index = function Index() {
 
 /***/ }),
 
-/***/ 0:
+/***/ 1:
 /*!*************************************************************************************************************************************************************!*\
   !*** multi next-client-pages-loader?page=%2F&absolutePagePath=C%3A%5CUsers%5CHerman%5CDocuments%5CBootCamp%5C2%5CReact-Pract%5CPollData%5Cpages%5Cindex.js ***!
   \*************************************************************************************************************************************************************/
@@ -3658,5 +3663,5 @@ module.exports = dll_5f137288facb1107b491;
 
 /***/ })
 
-},[[0,"static/runtime/webpack.js"]]]);
+},[[1,"static/runtime/webpack.js"]]]);
 //# sourceMappingURL=index.js.map
