@@ -43,7 +43,9 @@ const Question = props => {
         disabled={!answer}
         onClick={evt => {
           evt.preventDefault();
-          API.submitChoice(answer);
+          API.submitChoice({
+            choice: answer
+          });
         }}
       >
         Submit

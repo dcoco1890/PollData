@@ -5,6 +5,6 @@ export default {
     return axios.post("/answer", choice);
   },
   getPollData: function() {
-    return axios.get("/answers");
+    return axios.post("/answers");
   }
 };
