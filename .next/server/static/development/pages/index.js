@@ -116,7 +116,7 @@ const Inform = props => {
     stats = {}
   } = props;
   const counts = choices.map((choice, i) => {
-    return stats[i] || 0;
+    return stats[i + 1] || 0;
   });
   const totalCount = counts.reduce((total, count) => total + count, 0);
   const chartData = {
@@ -225,6 +225,12 @@ const Inform = props => {
   }))));
 };
 
+Inform.getInitialProps = ({
+  query
+}) => {
+  return console.log("GAY");
+};
+
 /* harmony default export */ __webpack_exports__["default"] = (Inform);
 
 /***/ }),
@@ -277,11 +283,16 @@ const Layout = props => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _utils_API__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/API */ "./utils/API.js");
+/* harmony import */ var _babel_runtime_corejs2_core_js_json_stringify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/core-js/json/stringify */ "./node_modules/@babel/runtime-corejs2/core-js/json/stringify.js");
+/* harmony import */ var _babel_runtime_corejs2_core_js_json_stringify__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_core_js_json_stringify__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! isomorphic-unfetch */ "isomorphic-unfetch");
+/* harmony import */ var isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_2__);
 
-var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+var _jsxFileName = "C:\\Users\\Herman\\Documents\\BootCamp\\2\\React-Pract\\PollData\\comps\\Question.js";
+
+var __jsx = react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement;
 
 
 
@@ -289,17 +300,42 @@ const Question = props => {
   const {
     0: answer,
     1: setAnswer
-  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0);
-  return __jsx("div", null, __jsx("span", {
-    className: "d-block w-100 h1 text-dark"
+  } = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(0);
+  const {
+    0: chosen,
+    1: setChosen
+  } = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false);
+  return __jsx("div", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 10
+    },
+    __self: undefined
+  }, __jsx("span", {
+    className: "d-block w-100 h1 text-dark",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 11
+    },
+    __self: undefined
   }, props.question), __jsx("div", {
-    className: "my-5 pt-0 pb-5"
+    className: "my-5 pt-0 pb-5",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 12
+    },
+    __self: undefined
   }, props.answers.map((choice, index) => {
     const selected = answer && answer === index + 1;
     const labelClass = ["custom-control-label pl-5 position-relative", selected ? "checked" : ""].join(" ");
     return __jsx("div", {
       key: index,
-      className: "custom-control custom-radio py-3 ml-2 d-flex align-items-center"
+      className: "custom-control custom-radio py-3 ml-2 d-flex align-items-center",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 20
+      },
+      __self: undefined
     }, __jsx("input", {
       type: "radio",
       className: "custom-control-input",
@@ -307,20 +343,46 @@ const Question = props => {
       name: "your-answer",
       id: `radio-num-${index + 1}`,
       checked: selected,
-      onChange: evt => setAnswer(evt.target.id)
+      onChange: evt => setAnswer(evt.target.id),
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 24
+      },
+      __self: undefined
     }), __jsx("label", {
       className: labelClass,
-      onClick: evt => setAnswer(index + 1)
+      onClick: evt => {
+        setChosen(true);
+        setAnswer(index + 1);
+      },
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 33
+      },
+      __self: undefined
     }, choice));
   })), __jsx("button", {
     className: "btn btn-primary text-uppercase my-5 ml-4 px-5 py-3 d-block",
-    disabled: !answer,
-    onClick: evt => {
+    disabled: !chosen,
+    onClick: async evt => {
       evt.preventDefault();
-      _utils_API__WEBPACK_IMPORTED_MODULE_1__["default"].submitChoice({
-        choice: answer
+      const res = await isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_2___default()("http://localhost:3000/api/answers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: _babel_runtime_corejs2_core_js_json_stringify__WEBPACK_IMPORTED_MODULE_0___default()({
+          choice: answer
+        })
+      }).then(res => {
+        return res.json();
       });
-    }
+    },
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 46
+    },
+    __self: undefined
   }, "Submit"));
 };
 
@@ -346,6 +408,17 @@ const dos = "position-relative h-100 align-items-start align-content-between bg-
 /* harmony default export */ __webpack_exports__["default"] = (props => __jsx("section", {
   className: `col-md-${props.col} d-flex flex-wrap ${props.uno ? uno : dos}`
 }, props.children));
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime-corejs2/core-js/json/stringify.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs2/core-js/json/stringify.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! core-js/library/fn/json/stringify */ "core-js/library/fn/json/stringify");
 
 /***/ }),
 
@@ -475,9 +548,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _comps_Section__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../comps/Section */ "./comps/Section.js");
 /* harmony import */ var _comps_Question__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../comps/Question */ "./comps/Question.js");
 /* harmony import */ var _comps_Inform__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../comps/Inform */ "./comps/Inform.js");
-/* harmony import */ var _utils_API__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/API */ "./utils/API.js");
-/* harmony import */ var pusher_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! pusher-js */ "pusher-js");
-/* harmony import */ var pusher_js__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(pusher_js__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! next/router */ "next/router");
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! isomorphic-unfetch */ "isomorphic-unfetch");
+/* harmony import */ var isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var pusher_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! pusher-js */ "pusher-js");
+/* harmony import */ var pusher_js__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(pusher_js__WEBPACK_IMPORTED_MODULE_15__);
 
 
 
@@ -485,13 +561,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
+var _jsxFileName = "C:\\Users\\Herman\\Documents\\BootCamp\\2\\React-Pract\\PollData\\pages\\index.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement;
 
 function ownKeys(object, enumerableOnly) { var keys = _babel_runtime_corejs2_core_js_object_keys__WEBPACK_IMPORTED_MODULE_5___default()(object); if (_babel_runtime_corejs2_core_js_object_get_own_property_symbols__WEBPACK_IMPORTED_MODULE_4___default.a) { var symbols = _babel_runtime_corejs2_core_js_object_get_own_property_symbols__WEBPACK_IMPORTED_MODULE_4___default()(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return _babel_runtime_corejs2_core_js_object_get_own_property_descriptor__WEBPACK_IMPORTED_MODULE_3___default()(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { Object(_babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_6__["default"])(target, key, source[key]); }); } else if (_babel_runtime_corejs2_core_js_object_get_own_property_descriptors__WEBPACK_IMPORTED_MODULE_2___default.a) { _babel_runtime_corejs2_core_js_object_define_properties__WEBPACK_IMPORTED_MODULE_1___default()(target, _babel_runtime_corejs2_core_js_object_get_own_property_descriptors__WEBPACK_IMPORTED_MODULE_2___default()(source)); } else { ownKeys(Object(source)).forEach(function (key) { _babel_runtime_corejs2_core_js_object_define_property__WEBPACK_IMPORTED_MODULE_0___default()(target, key, _babel_runtime_corejs2_core_js_object_get_own_property_descriptor__WEBPACK_IMPORTED_MODULE_3___default()(source, key)); }); } } return target; }
+
 
 
 
@@ -509,8 +586,20 @@ class Index extends react__WEBPACK_IMPORTED_MODULE_8___default.a.Component {
     };
   }
 
+  static async getInitialProps(ctx) {
+    const {
+      asPath
+    } = ctx;
+    console.log(asPath);
+    const res = await isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_14___default()("http://localhost:3000/api/answers");
+    const json = await res.json();
+    return {
+      json
+    };
+  }
+
   componentDidMount() {
-    this.pusher = new pusher_js__WEBPACK_IMPORTED_MODULE_14___default.a("3aae232a0153a63c4ccc", {
+    this.pusher = new pusher_js__WEBPACK_IMPORTED_MODULE_15___default.a("8cece438a57bacfb0865", {
       cluster: "mt1",
       encrypted: true
     });
@@ -525,19 +614,34 @@ class Index extends react__WEBPACK_IMPORTED_MODULE_8___default.a.Component {
       answers = _objectSpread({}, answers, {
         [choice]: count
       });
+      console.log(answers);
       this.setState({
         answers
       });
     });
-    this.pusher.connection.bind("connected", () => {
-      _utils_API__WEBPACK_IMPORTED_MODULE_13__["default"].getPollData().then(response => {
-        const answers = response.data.answers;
-        this.setState({
-          answers
-        });
-      });
+    this.setState({
+      answers: this.props.json
     });
-  }
+  } //   componentDidMount() {
+  //   this.pusher = new Pusher("8cece438a57bacfb0865", {
+  //     cluster: "mt1",
+  //     encrypted: true
+  //   });
+  //   this.channel = this.pusher.subscribe("poll-board");
+  // this.channel.bind("new-answer", ({ choice, count }) => {
+  //   let { answers } = this.state;
+  //   answers = { ...answers, [choice]: count };
+  //   this.setState({ answers });
+  // });
+  // this.pusher.connection.bind("connected", () => {
+  //   API.getPollData().then(response => {
+  //     console.log(response.data);
+  //     const answers = response.data.answers;
+  //     this.setState({ answers });
+  //   });
+  // });
+  //   }
+
 
   componentWillUnmount() {
     this.pusher.disconnect();
@@ -546,53 +650,62 @@ class Index extends react__WEBPACK_IMPORTED_MODULE_8___default.a.Component {
   render() {
     const choices = ["Red", "Green", "Blue", "Yellow", "Clear"];
     const question = "What is your favorite color?";
-    return __jsx(_comps_Layout__WEBPACK_IMPORTED_MODULE_9__["default"], null, __jsx(_comps_Section__WEBPACK_IMPORTED_MODULE_10__["default"], {
+    return __jsx(_comps_Layout__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 72
+      },
+      __self: this
+    }, __jsx(_comps_Section__WEBPACK_IMPORTED_MODULE_10__["default"], {
       col: "7",
-      uno: true
+      uno: true,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 73
+      },
+      __self: this
     }, __jsx("span", {
       style: {
         marginTop: -50
       },
-      className: "jsx-104230438" + " " + "d-block w-100 h5 text-uppercase text-primary font-weight-bold mb-4"
+      className: "jsx-104230438" + " " + "d-block w-100 h5 text-uppercase text-primary font-weight-bold mb-4",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 74
+      },
+      __self: this
     }, "Poll for the Day"), __jsx(_comps_Question__WEBPACK_IMPORTED_MODULE_11__["default"], {
       question: question,
-      answers: choices
+      answers: choices,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 80
+      },
+      __self: this
     })), __jsx(_comps_Section__WEBPACK_IMPORTED_MODULE_10__["default"], {
-      col: "5"
+      col: "5",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 82
+      },
+      __self: this
     }, __jsx(_comps_Inform__WEBPACK_IMPORTED_MODULE_12__["default"], {
       choices: choices,
-      stats: this.state.answers
+      stats: this.state.answers,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 83
+      },
+      __self: this
     })), __jsx(styled_jsx_style__WEBPACK_IMPORTED_MODULE_7___default.a, {
-      id: "104230438"
-    }, ".custom-control-label{background:transparent;color:#aaa;font-size:2rem;font-weight:300;cursor:pointer;line-height:2rem;}.custom-control-label:before,.custom-control-label:after{top:0;left:-10px;height:2.25rem;width:2.25rem;cursor:pointer;box-shadow:none !important;}.custom-control-label.checked{color:#5091a8 !important;}button.btn{-webkit-letter-spacing:0.15rem;-moz-letter-spacing:0.15rem;-ms-letter-spacing:0.15rem;letter-spacing:0.15rem;font-size:1rem;font-weight:600;width:100%;}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkM6XFxVc2Vyc1xcSGVybWFuXFxEb2N1bWVudHNcXEJvb3RDYW1wXFwyXFxSZWFjdC1QcmFjdFxcUG9sbERhdGFcXHBhZ2VzXFxpbmRleC5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUE0RDJCLEFBR29DLEFBVWpCLEFBU21CLEFBSUYsTUFaWixXQUNJLE1BWEosRUFtQmIsT0FQZ0IsRUFYQyxZQVlBLEdBWEMsWUFZVyxJQVhaLGVBQ0UsUUFXbkIsU0FWQSxZQWtCaUIsZUFDQyxnQkFDTCxXQUNiIiwiZmlsZSI6IkM6XFxVc2Vyc1xcSGVybWFuXFxEb2N1bWVudHNcXEJvb3RDYW1wXFwyXFxSZWFjdC1QcmFjdFxcUG9sbERhdGFcXHBhZ2VzXFxpbmRleC5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENvbXBvbmVudCB9IGZyb20gXCJyZWFjdFwiO1xyXG5pbXBvcnQgTGF5b3V0IGZyb20gXCIuLi9jb21wcy9MYXlvdXRcIjtcclxuaW1wb3J0IFNlY3Rpb24gZnJvbSBcIi4uL2NvbXBzL1NlY3Rpb25cIjtcclxuaW1wb3J0IFF1ZXN0aW9uIGZyb20gXCIuLi9jb21wcy9RdWVzdGlvblwiO1xyXG5pbXBvcnQgSW5mb3JtIGZyb20gXCIuLi9jb21wcy9JbmZvcm1cIjtcclxuaW1wb3J0IEFQSSBmcm9tIFwiLi4vdXRpbHMvQVBJXCI7XHJcblxyXG5pbXBvcnQgUHVzaGVyIGZyb20gXCJwdXNoZXItanNcIjtcclxuXHJcbmNsYXNzIEluZGV4IGV4dGVuZHMgUmVhY3QuQ29tcG9uZW50IHtcclxuICBjb25zdHJ1Y3Rvcihwcm9wcykge1xyXG4gICAgc3VwZXIocHJvcHMpO1xyXG4gICAgdGhpcy5zdGF0ZSA9IHtcclxuICAgICAgYW5zd2Vyczoge31cclxuICAgIH07XHJcbiAgfVxyXG5cclxuICBjb21wb25lbnREaWRNb3VudCgpIHtcclxuICAgIHRoaXMucHVzaGVyID0gbmV3IFB1c2hlcihwcm9jZXNzLmVudi5QVVNIRVJfQVBQX0tFWSwge1xyXG4gICAgICBjbHVzdGVyOiBwcm9jZXNzLmVudi5QVVNIRVJfQVBQX0NMVVNURVIsXHJcbiAgICAgIGVuY3J5cHRlZDogdHJ1ZVxyXG4gICAgfSk7XHJcblxyXG4gICAgdGhpcy5jaGFubmVsID0gdGhpcy5wdXNoZXIuc3Vic2NyaWJlKFwicG9sbC1ib2FyZFwiKTtcclxuXHJcbiAgICB0aGlzLmNoYW5uZWwuYmluZChcIm5ldy1hbnN3ZXJcIiwgKHsgY2hvaWNlLCBjb3VudCB9KSA9PiB7XHJcbiAgICAgIGxldCB7IGFuc3dlcnMgfSA9IHRoaXMuc3RhdGU7XHJcbiAgICAgIGFuc3dlcnMgPSB7IC4uLmFuc3dlcnMsIFtjaG9pY2VdOiBjb3VudCB9O1xyXG4gICAgICB0aGlzLnNldFN0YXRlKHsgYW5zd2VycyB9KTtcclxuICAgIH0pO1xyXG5cclxuICAgIHRoaXMucHVzaGVyLmNvbm5lY3Rpb24uYmluZChcImNvbm5lY3RlZFwiLCAoKSA9PiB7XHJcbiAgICAgIEFQSS5nZXRQb2xsRGF0YSgpLnRoZW4ocmVzcG9uc2UgPT4ge1xyXG4gICAgICAgIGNvbnN0IGFuc3dlcnMgPSByZXNwb25zZS5kYXRhLmFuc3dlcnM7XHJcbiAgICAgICAgdGhpcy5zZXRTdGF0ZSh7IGFuc3dlcnMgfSk7XHJcbiAgICAgIH0pO1xyXG4gICAgfSk7XHJcbiAgfVxyXG5cclxuICBjb21wb25lbnRXaWxsVW5tb3VudCgpIHtcclxuICAgIHRoaXMucHVzaGVyLmRpc2Nvbm5lY3QoKTtcclxuICB9XHJcblxyXG4gIHJlbmRlcigpIHtcclxuICAgIGNvbnN0IGNob2ljZXMgPSBbXCJSZWRcIiwgXCJHcmVlblwiLCBcIkJsdWVcIiwgXCJZZWxsb3dcIiwgXCJDbGVhclwiXTtcclxuICAgIGNvbnN0IHF1ZXN0aW9uID0gXCJXaGF0IGlzIHlvdXIgZmF2b3JpdGUgY29sb3I/XCI7XHJcbiAgICByZXR1cm4gKFxyXG4gICAgICA8TGF5b3V0PlxyXG4gICAgICAgIDxTZWN0aW9uIGNvbD17XCI3XCJ9IHVubz17dHJ1ZX0+XHJcbiAgICAgICAgICA8c3BhblxyXG4gICAgICAgICAgICBjbGFzc05hbWU9XCJkLWJsb2NrIHctMTAwIGg1IHRleHQtdXBwZXJjYXNlIHRleHQtcHJpbWFyeSBmb250LXdlaWdodC1ib2xkIG1iLTRcIlxyXG4gICAgICAgICAgICBzdHlsZT17eyBtYXJnaW5Ub3A6IC01MCB9fVxyXG4gICAgICAgICAgPlxyXG4gICAgICAgICAgICBQb2xsIGZvciB0aGUgRGF5XHJcbiAgICAgICAgICA8L3NwYW4+XHJcbiAgICAgICAgICA8UXVlc3Rpb24gcXVlc3Rpb249e3F1ZXN0aW9ufSBhbnN3ZXJzPXtjaG9pY2VzfSAvPlxyXG4gICAgICAgIDwvU2VjdGlvbj5cclxuICAgICAgICA8U2VjdGlvbiBjb2w9e1wiNVwifT5cclxuICAgICAgICAgIDxJbmZvcm0gY2hvaWNlcz17Y2hvaWNlc30gc3RhdHM9e3RoaXMuc3RhdGUuYW5zd2Vyc30gLz5cclxuICAgICAgICA8L1NlY3Rpb24+XHJcbiAgICAgICAgPHN0eWxlIGdsb2JhbCBqc3g+e2BcclxuICAgICAgICAgIC5jdXN0b20tY29udHJvbC1sYWJlbCB7XHJcbiAgICAgICAgICAgIGJhY2tncm91bmQ6IHRyYW5zcGFyZW50O1xyXG4gICAgICAgICAgICBjb2xvcjogI2FhYTtcclxuICAgICAgICAgICAgZm9udC1zaXplOiAycmVtO1xyXG4gICAgICAgICAgICBmb250LXdlaWdodDogMzAwO1xyXG4gICAgICAgICAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgICAgICAgICAgIGxpbmUtaGVpZ2h0OiAycmVtO1xyXG4gICAgICAgICAgfVxyXG5cclxuICAgICAgICAgIC5jdXN0b20tY29udHJvbC1sYWJlbDpiZWZvcmUsXHJcbiAgICAgICAgICAuY3VzdG9tLWNvbnRyb2wtbGFiZWw6YWZ0ZXIge1xyXG4gICAgICAgICAgICB0b3A6IDA7XHJcbiAgICAgICAgICAgIGxlZnQ6IC0xMHB4O1xyXG4gICAgICAgICAgICBoZWlnaHQ6IDIuMjVyZW07XHJcbiAgICAgICAgICAgIHdpZHRoOiAyLjI1cmVtO1xyXG4gICAgICAgICAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgICAgICAgICAgIGJveC1zaGFkb3c6IG5vbmUgIWltcG9ydGFudDtcclxuICAgICAgICAgIH1cclxuXHJcbiAgICAgICAgICAuY3VzdG9tLWNvbnRyb2wtbGFiZWwuY2hlY2tlZCB7XHJcbiAgICAgICAgICAgIGNvbG9yOiAjNTA5MWE4ICFpbXBvcnRhbnQ7XHJcbiAgICAgICAgICB9XHJcblxyXG4gICAgICAgICAgYnV0dG9uLmJ0biB7XHJcbiAgICAgICAgICAgIGxldHRlci1zcGFjaW5nOiAwLjE1cmVtO1xyXG4gICAgICAgICAgICBmb250LXNpemU6IDFyZW07XHJcbiAgICAgICAgICAgIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbiAgICAgICAgICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgICAgICAgfVxyXG4gICAgICAgIGB9PC9zdHlsZT5cclxuICAgICAgPC9MYXlvdXQ+XHJcbiAgICApO1xyXG4gIH1cclxufVxyXG5cclxuZXhwb3J0IGRlZmF1bHQgSW5kZXg7XHJcbiJdfQ== */\n/*@ sourceURL=C:\\\\Users\\\\Herman\\\\Documents\\\\BootCamp\\\\2\\\\React-Pract\\\\PollData\\\\pages\\\\index.js */"));
+      id: "104230438",
+      __self: this
+    }, ".custom-control-label{background:transparent;color:#aaa;font-size:2rem;font-weight:300;cursor:pointer;line-height:2rem;}.custom-control-label:before,.custom-control-label:after{top:0;left:-10px;height:2.25rem;width:2.25rem;cursor:pointer;box-shadow:none !important;}.custom-control-label.checked{color:#5091a8 !important;}button.btn{-webkit-letter-spacing:0.15rem;-moz-letter-spacing:0.15rem;-ms-letter-spacing:0.15rem;letter-spacing:0.15rem;font-size:1rem;font-weight:600;width:100%;}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkM6XFxVc2Vyc1xcSGVybWFuXFxEb2N1bWVudHNcXEJvb3RDYW1wXFwyXFxSZWFjdC1QcmFjdFxcUG9sbERhdGFcXHBhZ2VzXFxpbmRleC5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFvRjJCLEFBR29DLEFBVWpCLEFBU21CLEFBSUYsTUFaWixXQUNJLE1BWEosRUFtQmIsT0FQZ0IsRUFYQyxZQVlBLEdBWEMsWUFZVyxJQVhaLGVBQ0UsUUFXbkIsU0FWQSxZQWtCaUIsZUFDQyxnQkFDTCxXQUNiIiwiZmlsZSI6IkM6XFxVc2Vyc1xcSGVybWFuXFxEb2N1bWVudHNcXEJvb3RDYW1wXFwyXFxSZWFjdC1QcmFjdFxcUG9sbERhdGFcXHBhZ2VzXFxpbmRleC5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBSZWFjdCwgeyBDb21wb25lbnQgfSBmcm9tIFwicmVhY3RcIjtcclxuaW1wb3J0IExheW91dCBmcm9tIFwiLi4vY29tcHMvTGF5b3V0XCI7XHJcbmltcG9ydCBTZWN0aW9uIGZyb20gXCIuLi9jb21wcy9TZWN0aW9uXCI7XHJcbmltcG9ydCBRdWVzdGlvbiBmcm9tIFwiLi4vY29tcHMvUXVlc3Rpb25cIjtcclxuaW1wb3J0IEluZm9ybSBmcm9tIFwiLi4vY29tcHMvSW5mb3JtXCI7XHJcbmltcG9ydCBSb3V0ZXIgZnJvbSBcIm5leHQvcm91dGVyXCI7XHJcbmltcG9ydCBmZXRjaCBmcm9tIFwiaXNvbW9ycGhpYy11bmZldGNoXCI7XHJcblxyXG5pbXBvcnQgUHVzaGVyIGZyb20gXCJwdXNoZXItanNcIjtcclxuXHJcbmNsYXNzIEluZGV4IGV4dGVuZHMgUmVhY3QuQ29tcG9uZW50IHtcclxuICBjb25zdHJ1Y3Rvcihwcm9wcykge1xyXG4gICAgc3VwZXIocHJvcHMpO1xyXG4gICAgdGhpcy5zdGF0ZSA9IHtcclxuICAgICAgYW5zd2Vyczoge31cclxuICAgIH07XHJcbiAgfVxyXG5cclxuICBzdGF0aWMgYXN5bmMgZ2V0SW5pdGlhbFByb3BzKGN0eCkge1xyXG4gICAgY29uc3QgeyBhc1BhdGggfSA9IGN0eDtcclxuICAgIGNvbnNvbGUubG9nKGFzUGF0aCk7XHJcblxyXG4gICAgY29uc3QgcmVzID0gYXdhaXQgZmV0Y2goXCJodHRwOi8vbG9jYWxob3N0OjMwMDAvYXBpL2Fuc3dlcnNcIik7XHJcbiAgICBjb25zdCBqc29uID0gYXdhaXQgcmVzLmpzb24oKTtcclxuICAgIHJldHVybiB7IGpzb24gfTtcclxuICB9XHJcblxyXG4gIGNvbXBvbmVudERpZE1vdW50KCkge1xyXG4gICAgdGhpcy5wdXNoZXIgPSBuZXcgUHVzaGVyKFwiOGNlY2U0MzhhNTdiYWNmYjA4NjVcIiwge1xyXG4gICAgICBjbHVzdGVyOiBcIm10MVwiLFxyXG4gICAgICBlbmNyeXB0ZWQ6IHRydWVcclxuICAgIH0pO1xyXG4gICAgdGhpcy5jaGFubmVsID0gdGhpcy5wdXNoZXIuc3Vic2NyaWJlKFwicG9sbC1ib2FyZFwiKTtcclxuICAgIHRoaXMuY2hhbm5lbC5iaW5kKFwibmV3LWFuc3dlclwiLCAoeyBjaG9pY2UsIGNvdW50IH0pID0+IHtcclxuICAgICAgbGV0IHsgYW5zd2VycyB9ID0gdGhpcy5zdGF0ZTtcclxuICAgICAgYW5zd2VycyA9IHsgLi4uYW5zd2VycywgW2Nob2ljZV06IGNvdW50IH07XHJcbiAgICAgIGNvbnNvbGUubG9nKGFuc3dlcnMpO1xyXG4gICAgICB0aGlzLnNldFN0YXRlKHsgYW5zd2VycyB9KTtcclxuICAgIH0pO1xyXG4gICAgdGhpcy5zZXRTdGF0ZSh7XHJcbiAgICAgIGFuc3dlcnM6IHRoaXMucHJvcHMuanNvblxyXG4gICAgfSk7XHJcbiAgfVxyXG4gIC8vICAgY29tcG9uZW50RGlkTW91bnQoKSB7XHJcbiAgLy8gICB0aGlzLnB1c2hlciA9IG5ldyBQdXNoZXIoXCI4Y2VjZTQzOGE1N2JhY2ZiMDg2NVwiLCB7XHJcbiAgLy8gICAgIGNsdXN0ZXI6IFwibXQxXCIsXHJcbiAgLy8gICAgIGVuY3J5cHRlZDogdHJ1ZVxyXG4gIC8vICAgfSk7XHJcbiAgLy8gICB0aGlzLmNoYW5uZWwgPSB0aGlzLnB1c2hlci5zdWJzY3JpYmUoXCJwb2xsLWJvYXJkXCIpO1xyXG4gIC8vIHRoaXMuY2hhbm5lbC5iaW5kKFwibmV3LWFuc3dlclwiLCAoeyBjaG9pY2UsIGNvdW50IH0pID0+IHtcclxuICAvLyAgIGxldCB7IGFuc3dlcnMgfSA9IHRoaXMuc3RhdGU7XHJcbiAgLy8gICBhbnN3ZXJzID0geyAuLi5hbnN3ZXJzLCBbY2hvaWNlXTogY291bnQgfTtcclxuICAvLyAgIHRoaXMuc2V0U3RhdGUoeyBhbnN3ZXJzIH0pO1xyXG4gIC8vIH0pO1xyXG4gIC8vIHRoaXMucHVzaGVyLmNvbm5lY3Rpb24uYmluZChcImNvbm5lY3RlZFwiLCAoKSA9PiB7XHJcbiAgLy8gICBBUEkuZ2V0UG9sbERhdGEoKS50aGVuKHJlc3BvbnNlID0+IHtcclxuICAvLyAgICAgY29uc29sZS5sb2cocmVzcG9uc2UuZGF0YSk7XHJcbiAgLy8gICAgIGNvbnN0IGFuc3dlcnMgPSByZXNwb25zZS5kYXRhLmFuc3dlcnM7XHJcbiAgLy8gICAgIHRoaXMuc2V0U3RhdGUoeyBhbnN3ZXJzIH0pO1xyXG4gIC8vICAgfSk7XHJcbiAgLy8gfSk7XHJcbiAgLy8gICB9XHJcblxyXG4gIGNvbXBvbmVudFdpbGxVbm1vdW50KCkge1xyXG4gICAgdGhpcy5wdXNoZXIuZGlzY29ubmVjdCgpO1xyXG4gIH1cclxuXHJcbiAgcmVuZGVyKCkge1xyXG4gICAgY29uc3QgY2hvaWNlcyA9IFtcIlJlZFwiLCBcIkdyZWVuXCIsIFwiQmx1ZVwiLCBcIlllbGxvd1wiLCBcIkNsZWFyXCJdO1xyXG4gICAgY29uc3QgcXVlc3Rpb24gPSBcIldoYXQgaXMgeW91ciBmYXZvcml0ZSBjb2xvcj9cIjtcclxuICAgIHJldHVybiAoXHJcbiAgICAgIDxMYXlvdXQ+XHJcbiAgICAgICAgPFNlY3Rpb24gY29sPXtcIjdcIn0gdW5vPXt0cnVlfT5cclxuICAgICAgICAgIDxzcGFuXHJcbiAgICAgICAgICAgIGNsYXNzTmFtZT1cImQtYmxvY2sgdy0xMDAgaDUgdGV4dC11cHBlcmNhc2UgdGV4dC1wcmltYXJ5IGZvbnQtd2VpZ2h0LWJvbGQgbWItNFwiXHJcbiAgICAgICAgICAgIHN0eWxlPXt7IG1hcmdpblRvcDogLTUwIH19XHJcbiAgICAgICAgICA+XHJcbiAgICAgICAgICAgIFBvbGwgZm9yIHRoZSBEYXlcclxuICAgICAgICAgIDwvc3Bhbj5cclxuICAgICAgICAgIDxRdWVzdGlvbiBxdWVzdGlvbj17cXVlc3Rpb259IGFuc3dlcnM9e2Nob2ljZXN9IC8+XHJcbiAgICAgICAgPC9TZWN0aW9uPlxyXG4gICAgICAgIDxTZWN0aW9uIGNvbD17XCI1XCJ9PlxyXG4gICAgICAgICAgPEluZm9ybSBjaG9pY2VzPXtjaG9pY2VzfSBzdGF0cz17dGhpcy5zdGF0ZS5hbnN3ZXJzfSAvPlxyXG4gICAgICAgIDwvU2VjdGlvbj5cclxuICAgICAgICA8c3R5bGUgZ2xvYmFsIGpzeD57YFxyXG4gICAgICAgICAgLmN1c3RvbS1jb250cm9sLWxhYmVsIHtcclxuICAgICAgICAgICAgYmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XHJcbiAgICAgICAgICAgIGNvbG9yOiAjYWFhO1xyXG4gICAgICAgICAgICBmb250LXNpemU6IDJyZW07XHJcbiAgICAgICAgICAgIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgICAgICAgICAgIGN1cnNvcjogcG9pbnRlcjtcclxuICAgICAgICAgICAgbGluZS1oZWlnaHQ6IDJyZW07XHJcbiAgICAgICAgICB9XHJcblxyXG4gICAgICAgICAgLmN1c3RvbS1jb250cm9sLWxhYmVsOmJlZm9yZSxcclxuICAgICAgICAgIC5jdXN0b20tY29udHJvbC1sYWJlbDphZnRlciB7XHJcbiAgICAgICAgICAgIHRvcDogMDtcclxuICAgICAgICAgICAgbGVmdDogLTEwcHg7XHJcbiAgICAgICAgICAgIGhlaWdodDogMi4yNXJlbTtcclxuICAgICAgICAgICAgd2lkdGg6IDIuMjVyZW07XHJcbiAgICAgICAgICAgIGN1cnNvcjogcG9pbnRlcjtcclxuICAgICAgICAgICAgYm94LXNoYWRvdzogbm9uZSAhaW1wb3J0YW50O1xyXG4gICAgICAgICAgfVxyXG5cclxuICAgICAgICAgIC5jdXN0b20tY29udHJvbC1sYWJlbC5jaGVja2VkIHtcclxuICAgICAgICAgICAgY29sb3I6ICM1MDkxYTggIWltcG9ydGFudDtcclxuICAgICAgICAgIH1cclxuXHJcbiAgICAgICAgICBidXR0b24uYnRuIHtcclxuICAgICAgICAgICAgbGV0dGVyLXNwYWNpbmc6IDAuMTVyZW07XHJcbiAgICAgICAgICAgIGZvbnQtc2l6ZTogMXJlbTtcclxuICAgICAgICAgICAgZm9udC13ZWlnaHQ6IDYwMDtcclxuICAgICAgICAgICAgd2lkdGg6IDEwMCU7XHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgYH08L3N0eWxlPlxyXG4gICAgICA8L0xheW91dD5cclxuICAgICk7XHJcbiAgfVxyXG59XHJcblxyXG5leHBvcnQgZGVmYXVsdCBJbmRleDtcclxuIl19 */\n/*@ sourceURL=C:\\\\Users\\\\Herman\\\\Documents\\\\BootCamp\\\\2\\\\React-Pract\\\\PollData\\\\pages\\\\index.js */"));
   }
 
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Index);
-
-/***/ }),
-
-/***/ "./utils/API.js":
-/*!**********************!*\
-  !*** ./utils/API.js ***!
-  \**********************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "axios");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  submitChoice: function (choice) {
-    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/answer", choice);
-  },
-  getPollData: function () {
-    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/answers");
-  }
-});
 
 /***/ }),
 
@@ -608,14 +721,14 @@ module.exports = __webpack_require__(/*! C:\Users\Herman\Documents\BootCamp\2\Re
 
 /***/ }),
 
-/***/ "axios":
-/*!************************!*\
-  !*** external "axios" ***!
-  \************************/
+/***/ "core-js/library/fn/json/stringify":
+/*!****************************************************!*\
+  !*** external "core-js/library/fn/json/stringify" ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = require("axios");
+module.exports = require("core-js/library/fn/json/stringify");
 
 /***/ }),
 
@@ -685,6 +798,17 @@ module.exports = require("core-js/library/fn/object/keys");
 
 /***/ }),
 
+/***/ "isomorphic-unfetch":
+/*!*************************************!*\
+  !*** external "isomorphic-unfetch" ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("isomorphic-unfetch");
+
+/***/ }),
+
 /***/ "next/head":
 /*!****************************!*\
   !*** external "next/head" ***!
@@ -693,6 +817,17 @@ module.exports = require("core-js/library/fn/object/keys");
 /***/ (function(module, exports) {
 
 module.exports = require("next/head");
+
+/***/ }),
+
+/***/ "next/router":
+/*!******************************!*\
+  !*** external "next/router" ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("next/router");
 
 /***/ }),
 

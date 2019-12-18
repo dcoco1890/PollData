@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
-import API from "../utils/API";
+
+import fetch from "isomorphic-unfetch";
 
 const Question = props => {
   const [answer, setAnswer] = useState(0);
+  const [chosen, setChosen] = useState(false);
 
   return (
     <div>
@@ -30,7 +32,10 @@ const Question = props => {
               />
               <label
                 className={labelClass}
-                onClick={evt => setAnswer(index + 1)}
+                onClick={evt => {
+                  setChosen(true);
+                  setAnswer(index + 1);
+                }}
               >
                 {choice}
               </label>
@@ -40,11 +45,20 @@ const Question = props => {
       </div>
       <button
         className="btn btn-primary text-uppercase my-5 ml-4 px-5 py-3 d-block"
-        disabled={!answer}
-        onClick={evt => {
+        disabled={!chosen}
+        onClick={async evt => {
           evt.preventDefault();
-          API.submitChoice({
-            choice: answer
+          const res = await fetch(
+            "https://polldata.dcoco91.now.sh/api/answers",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({ choice: answer })
+            }
+          ).then(res => {
+            return res.json();
           });
         }}
       >

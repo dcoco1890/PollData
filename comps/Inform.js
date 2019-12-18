@@ -4,7 +4,7 @@ const Inform = props => {
   const { choices = [], stats = {} } = props;
 
   const counts = choices.map((choice, i) => {
-    return stats[i] || 0;
+    return stats[i + 1] || 0;
   });
   const totalCount = counts.reduce((total, count) => total + count, 0);
 
@@ -117,6 +117,10 @@ const Inform = props => {
       </div>
     </>
   );
+};
+
+Inform.getInitialProps = ({ query }) => {
+  return console.log("GAY");
 };
 
 export default Inform;

@@ -1,8 +1,16 @@
 {
   "env": {
-    "PUSHER_APP_ID": "@app-id",
-    "PUSHER_APP_KEY": "@key",
-    "PUSHER_APP_SECRET": "@secret",
-    "PUSHER_APP_CLUSTER": "@cluster"
+    "APP_ID": "@app-id",
+    "KEY": "8cece438a57bacfb0865",
+    "SECRET": "@secret",
+    "CLUSTER": "mt1"
+  },
+  "build": {
+    "env": {
+      "APP_ID": "@app-id",
+      "KEY": "8cece438a57bacfb0865",
+      "SECRET": "@secret",
+      "CLUSTER": "mt1"
+    }
   }
 }

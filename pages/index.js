@@ -1,9 +1,10 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import Layout from "../comps/Layout";
 import Section from "../comps/Section";
 import Question from "../comps/Question";
 import Inform from "../comps/Inform";
-import API from "../utils/API";
+
+import fetch from "isomorphic-unfetch";
 
 import Pusher from "pusher-js";
 
@@ -15,27 +16,47 @@ class Index extends React.Component {
     };
   }
 
+  static async getInitialProps(ctx) {
+    const res = await fetch("https://polldata.dcoco91.now.sh/api/answers");
+    const json = await res.json();
+    return { json };
+  }
+
   componentDidMount() {
-    this.pusher = new Pusher(process.env.PUSHER_APP_KEY, {
-      cluster: process.env.PUSHER_APP_CLUSTER,
+    this.pusher = new Pusher("8cece438a57bacfb0865", {
+      cluster: "mt1",
       encrypted: true
     });
-
     this.channel = this.pusher.subscribe("poll-board");
-
     this.channel.bind("new-answer", ({ choice, count }) => {
       let { answers } = this.state;
       answers = { ...answers, [choice]: count };
+      console.log(answers);
       this.setState({ answers });
     });
-
-    this.pusher.connection.bind("connected", () => {
-      API.getPollData().then(response => {
-        const answers = response.data.answers;
-        this.setState({ answers });
-      });
+    this.setState({
+      answers: this.props.json
     });
   }
+  //   componentDidMount() {
+  //   this.pusher = new Pusher("8cece438a57bacfb0865", {
+  //     cluster: "mt1",
+  //     encrypted: true
+  //   });
+  //   this.channel = this.pusher.subscribe("poll-board");
+  // this.channel.bind("new-answer", ({ choice, count }) => {
+  //   let { answers } = this.state;
+  //   answers = { ...answers, [choice]: count };
+  //   this.setState({ answers });
+  // });
+  // this.pusher.connection.bind("connected", () => {
+  //   API.getPollData().then(response => {
+  //     console.log(response.data);
+  //     const answers = response.data.answers;
+  //     this.setState({ answers });
+  //   });
+  // });
+  //   }
 
   componentWillUnmount() {
     this.pusher.disconnect();
